@@ -193,7 +193,8 @@ class LoginComponents{
                       },
                       child: InkWell(
                         onTap: (){
-                          Get.to(DashboardPage());
+                          controller.login("dukar.kenya@gmail.com","DukarKenya");
+                          // Get.to(DashboardPage());
                         },
                         child: button_widgets(
                           color: AppColors().lightColorNo,
