@@ -143,7 +143,7 @@ class AppManagement{
           "Type ID",
           "Action"
         ], (id) {
-          // removeLocation(id);
+          removeLocation(id,"productType");
         },"productType","name");
         case "Product sizes":
         return OrdersComponents().allDetails([
