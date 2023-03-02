@@ -69,7 +69,7 @@ class LoginComponents{
                 onFinished: () {
                   print("Tap Event");
                   controller.showMsg.toggle();
-                  controller.wholeFormH.value=Get.height;
+                  controller.wholeFormH.value=600;
                 },
               ),
             ),
@@ -98,7 +98,7 @@ class LoginComponents{
                   isRepeatingAnimation: false,
                   onFinished: () {
                     print("Tap Event");
-                    controller.wholeFormH.value=Get.height;
+                    controller.wholeFormH.value=600;
                   },
                 ),
               ),

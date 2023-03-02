@@ -9,6 +9,7 @@ import 'Controller/auth_controller.dart';
 import 'Page/Dashboard/dashboard_controller.dart';
 import 'Page/LoginPage/login_controller.dart';
 import 'Page/LoginPage/login_page.dart';
+import 'Page/section/form_layout.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -28,10 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.landscapeLeft,
-    //   DeviceOrientation.landscapeRight,
+    //   DeviceOrientation.portraitDown,
+    //   DeviceOrientation.portraitUp,
     // ]);
     Get.put(LoginController());
+    Get.put(FormLayout());
     Get.put(DashboardController());
     Get.put(AuthController());
     return GetMaterialApp(

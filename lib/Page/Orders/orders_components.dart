@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../Widgets/formbuildtextfield.dart';
 import '../../Widgets/text_widget.dart';
 import '../../style/app_Colors.dart';
 import '../View/view_page.dart';
@@ -300,8 +301,47 @@ class OrdersComponents {
                                   child: InkWell(
                                     hoverColor: Colors.transparent,
                                     onTap: () {
-                                      fun(snapshot.data!.docs[index]['locationID']);
-                                    },
+                                      if (collection ==
+                                                      "locations") {
+                                                    fun(snapshot
+                                                            .data!.docs[index]
+                                                        ['locationID']);
+                                                    return;
+                                                  }
+
+                                      if (collection ==
+                                                      "shoppyDashboard") {
+                                        print("shoppyDashboard${snapshot
+                                            .data!.docs[index]
+                                        ['uid']}");
+                                                    fun(snapshot
+                                                            .data!.docs[index]
+                                                        ['uid']);
+                                                    return;
+                                                  }
+                                      if (collection ==
+                                                      "categories") {
+                                                    fun(snapshot
+                                                            .data!.docs[index]
+                                                        ['categoryID']);
+                                                    return;
+                                                  }
+                                      if (collection ==
+                                                      "productFabric") {
+                                                    fun(snapshot
+                                                            .data!.docs[index]
+                                                        ['fabricID']);
+                                                    return;
+                                                  }
+                                      if (collection ==
+                                                      "sizes") {
+                                                    fun(snapshot
+                                                            .data!.docs[index]
+                                                        ['sizeID']);
+                                                    return;
+                                                  }
+
+                                                },
                                     child: e.toString().isURL?Align(child: Image.network(e,width: 50,height: 50,),alignment: Alignment.centerLeft,):Align(
                                       alignment: Alignment.centerLeft,
                                       child: text_widget(
@@ -362,7 +402,7 @@ class OrdersComponents {
         snapshot.data!.docs[index]['value'],
         "${snapshot.data!.docs[index]['condition']}",
         "${snapshot.data!.docs[index]['show']}",
-        "View"
+        "Remove",
       ];
     }else if(collection=="categories"){
       listOfData=[

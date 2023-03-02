@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ class LoginPage extends GetView<LoginController>{
   final comp=LoginComponents();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Color(AppColors().fadedLightColorNo),
       body: SingleChildScrollView(
