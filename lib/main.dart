@@ -1,3 +1,4 @@
+import 'package:admin_dukar/Page/Dashboard/dashboard_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,17 +27,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
     Get.put(LoginController());
     Get.put(DashboardController());
     Get.put(AuthController());
     return GetMaterialApp(
       title: 'Dukar Admin',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: DashboardPage(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

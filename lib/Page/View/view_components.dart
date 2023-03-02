@@ -6,7 +6,6 @@ import 'package:shimmer/shimmer.dart';
 import '../../Graphs/graphs.dart';
 import '../../Widgets/text_widget.dart';
 import '../../style/app_Colors.dart';
-import '../Dashboard/section/appsection.dart';
 import '../Orders/orders_components.dart';
 
 class ViewComponent {
@@ -197,28 +196,28 @@ class ViewComponent {
           const SizedBox(
             height: 20,
           ),
-          OrdersComponents().orderListing([
-            "Order No",
-            "Product name",
-            "Quantity",
-            "Req. Date",
-            "Total price",
-            "Action"
-          ], [
-            "SHP-012#",
-            "Nike Air-force 1s",
-            "X3",
-            "4 days ago",
-            "KES: 12,300",
-            "View"
-          ], () {}),
+          // OrdersComponents().orderListing([
+          //   "Order No",
+          //   "Product name",
+          //   "Quantity",
+          //   "Req. Date",
+          //   "Total price",
+          //   "Action"
+          // ], [
+          //   "SHP-012#",
+          //   "Nike Air-force 1s",
+          //   "X3",
+          //   "4 days ago",
+          //   "KES: 12,300",
+          //   "View"
+          // ], () {}),
           const SizedBox(
             height: 30,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [0, 1, 2, 3]
-                .map((e) => OrdersComponents().cardPlaceHolder(e))
+                .map((e) => OrdersComponents().cardPlaceHolder("shoppySellers","",e.toString(),"activationStatus"))
                 .toList(),
           ),
           const SizedBox(
@@ -238,19 +237,19 @@ class ViewComponent {
           const SizedBox(
             height: 30,
           ),
-          OrdersComponents().orderListing([
-            "Username",
-            "Full name",
-            "Created On",
-            "Email",
-            "Action"
-          ], [
-            "Rider One",
-            "John Doh",
-            "12-12-22-11:24:33",
-            "email@example.com",
-            "View"
-          ], () {}),
+          // OrdersComponents().orderListing([
+          //   "Username",
+          //   "Full name",
+          //   "Created On",
+          //   "Email",
+          //   "Action"
+          // ], [
+          //   "Rider One",
+          //   "John Doh",
+          //   "12-12-22-11:24:33",
+          //   "email@example.com",
+          //   "View"
+          // ], () {}),
           const SizedBox(
             height: 30,
           ),
@@ -268,10 +267,10 @@ class ViewComponent {
           const SizedBox(
             height: 30,
           ),
-          OrdersComponents().orderListing(
-              ["Location", "Sub-location", "Country", "City", "Action"],
-              ["Woodley Kenyatta", "Woodley", "Kenya", "Nairobi", "View"],
-              () {}),
+          // OrdersComponents().orderListing(
+          //     ["Location", "Sub-location", "Country", "City", "Action"],
+          //     ["Woodley Kenyatta", "Woodley", "Kenya", "Nairobi", "View"],
+          //     () {}),
         ],
       ),
     );

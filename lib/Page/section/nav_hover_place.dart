@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../Widgets/text_widget.dart';
 import '../../../style/app_Colors.dart';
-import '../dashboard_controller.dart';
+import '../Dashboard/dashboard_controller.dart';
 
 class NavHoverPlace extends StatelessWidget {
   final e;

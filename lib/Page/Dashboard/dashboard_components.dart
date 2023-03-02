@@ -6,9 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../Constants/dms_strings.dart';
 import '../../Widgets/text_widget.dart';
 import '../../style/app_Colors.dart';
+import '../section/appsection.dart';
+import '../section/nav_hover_place.dart';
 import 'dashboard_controller.dart';
-import 'section/appsection.dart';
-import 'section/nav_hover_place.dart';
 
 class DashboardComponet {
   final controller = Get.find<DashboardController>();

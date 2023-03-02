@@ -9,6 +9,10 @@ class DsmString{
   static  String descriptionMsg="Dukar Management System -(DMS) is a monitoring system that manage the data from our products.";
   static  String request="Request access to the system ->";
   static  String staffID="Your staff ID";
+  static  String country="Country name";
+  static  String county="County name";
+  static  String location="Location name";
+  static  String subcounty="Sub-County name";
   static  String staffPswd="Staff password";
   static  String writeMsg="write message here...";
   static  List menu=[{

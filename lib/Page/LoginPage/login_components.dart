@@ -108,6 +108,7 @@ class LoginComponents{
       ),
     );
   }
+  final _formKey = GlobalKey<FormBuilderState>();
 
   //left component
   Widget formComponent(){
@@ -120,6 +121,7 @@ class LoginComponents{
             child: Visibility(
               visible: controller.showForm.isTrue,
               child: FormBuilder(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -170,53 +172,66 @@ class LoginComponents{
                         height: 50,
                         color: 0xff1F1C34,
                         hintText: DsmString.staffPswd,
-                        attribute: "email",
+                        attribute: "password",
                         dividerColor: 0xff1F1C34,
                         errorText: "Enter ${DsmString.staffPswd}",
                         font: "Lato",
-                        keybordType: TextInputType.number,
+                        keybordType: TextInputType.text,
                         fontWeight: FontWeight.w400,
                         fontSize: 15.0,
                         formType: "text",
                         dropDownList: [],
                         submitAction: () {}),
                     const SizedBox(height: 50,),
-                    MouseRegion(
-                      onEnter: (v){
-                        controller.isHoveredOnTop.toggle();
-                      },
-                      onExit: (v){
-                        controller.isHoveredOnTop.toggle();
-                      },
-                      onHover: (v){
-                        print('Mouse is hovering over this widget!$v');
-                      },
-                      child: InkWell(
-                        onTap: (){
-                          controller.login("dukar.kenya@gmail.com","DukarKenya");
-                          // Get.to(DashboardPage());
-                        },
-                        child: button_widgets(
-                          color: AppColors().lightColorNo,
-                          height: controller.formH.value,
-                          width: 150,
-                          radius: 10,
-                          borderColor: 0xffFF9C27B0,
-                          fun: (){
-
+                    Obx(() => Visibility(
+                      visible: controller.isLoading.isFalse,
+                      child: MouseRegion(
+                          onEnter: (v){
+                            controller.isHoveredOnTop.toggle();
                           },
-                          widget: Center(
-                              child: text_widget(
-                                color: AppColors().whiteColorNo,
-                                fontWeight: FontWeight.w400,
-                                textAlign: TextAlign.center,
-                                font: "Lato",
-                                fontSize: 15,
-                                text: "Gain access",
-                              )
-                          ),
-                    ),
-                      )),
+                          onExit: (v){
+                            controller.isHoveredOnTop.toggle();
+                          },
+                          onHover: (v){
+                            print('Mouse is hovering over this widget!$v');
+                          },
+                          child: InkWell(
+                            onTap: (){
+                              if(_formKey.currentState!.saveAndValidate()){
+                                controller.isLoading.toggle();
+                                controller.errorValue.value="";
+                                controller.login(_formKey.currentState!.value['email'],_formKey.currentState!.value['password']);
+                              }
+                            },
+                            child: button_widgets(
+                              color: AppColors().lightColorNo,
+                              height: controller.formH.value,
+                              width: 150,
+                              radius: 10,
+                              borderColor: 0xffFF9C27B0,
+                              fun: (){
+
+                              },
+                              widget: Center(
+                                  child: text_widget(
+                                    color: AppColors().whiteColorNo,
+                                    fontWeight: FontWeight.w400,
+                                    textAlign: TextAlign.center,
+                                    font: "Lato",
+                                    fontSize: 15,
+                                    text: "Gain access",
+                                  )
+                              ),
+                            ),
+                          )),
+                    )),
+                    Obx(() => Visibility(
+                      visible: controller.isLoading.isTrue,
+                      child:CircularProgressIndicator(
+                        color: AppColors().lightColor,
+                        backgroundColor: AppColors().fadedLightColor,
+                      ),
+                    )),
                   ],
                 ),
               ),
