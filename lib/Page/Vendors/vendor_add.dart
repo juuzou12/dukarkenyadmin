@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
-import '../../Controller/vendor_collection.dart';
+import '../../Controller/vendor_controller.dart';
 import '../../Widgets/formbuildtextfield.dart';
 import '../../Widgets/text_widget.dart';
 
-class VendorAdding extends GetView<VendorCollection>{
+class VendorAdding extends GetView<VendorController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,51 +46,16 @@ class VendorAdding extends GetView<VendorCollection>{
                   text: "Store Details",
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store name",
-                        attribute: "storeName",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard position first",
-                        font: "Poppins",
-                        keybordType: TextInputType.text,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store phone number",
-                        attribute: "businessPhone",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const FormPlaceHolder(payload: [
+                {
+                  "hintText":"Store name",
+                  "attribute":"storeName"
+                },
+                {
+                  "hintText":"Store phone number",
+                  "attribute":"storeNumber"
+                },
+              ],),
               Align(
                 alignment: Alignment.centerLeft,
                 child: text_widget(
@@ -102,51 +67,16 @@ class VendorAdding extends GetView<VendorCollection>{
                   text: "This email will be used to create the store account, and their password will be their activation code.",
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store email",
-                        attribute: "storeEmail",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard position first",
-                        font: "Poppins",
-                        keybordType: TextInputType.emailAddress,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store bio/about",
-                        attribute: "storeBio",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.text,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const FormPlaceHolder(payload: [
+                {
+                  "hintText":"Store email",
+                  "attribute":"storeEmail"
+                },
+                {
+                  "hintText":"Store bio/about",
+                  "attribute":"bio"
+                },
+              ],),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -170,116 +100,26 @@ class VendorAdding extends GetView<VendorCollection>{
                   )
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Delivery fee per Km",
-                        attribute: "storeBio",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store accepted payment method",
-                        attribute: "storePaymentMethod",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard position first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store payment number",
-                        attribute: "storePaymentNo",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store type",
-                        attribute: "storeType",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard position first",
-                        font: "Poppins",
-                        keybordType: TextInputType.text,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store gender target",
-                        attribute: "storeGenderTarget",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.text,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const FormPlaceHolder(payload: [
+                {
+                  "hintText":"Business accepted payment method",
+                  "attribute":"payMethod"
+                },
+                {
+                  "hintText":"Business till number",
+                  "attribute":"tillNo"
+                },
+              ],),
+              const FormPlaceHolder(payload: [
+                {
+                  "hintText":"Business PayBill number",
+                  "attribute":"payBillNo"
+                },
+                {
+                  "hintText":"Business account number",
+                  "attribute":"accNo"
+                },
+              ],),
               Align(
                 alignment: Alignment.centerLeft,
                 child: text_widget(
@@ -291,93 +131,26 @@ class VendorAdding extends GetView<VendorCollection>{
                   text: "Business owner Details",
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store owner name",
-                        attribute: "ownerName",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard position first",
-                        font: "Poppins",
-                        keybordType: TextInputType.text,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Owner phone number",
-                        attribute: "ownerPhone",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store owner ID NO",
-                        attribute: "ownerId",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard position first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Owner email",
-                        attribute: "ownerEmail",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const FormPlaceHolder(payload: [
+                {
+                  "hintText":"Owner name",
+                  "attribute":"wonerName"
+                },
+                {
+                  "hintText":"Owner phone number",
+                  "attribute":"ownerNo"
+                },
+              ],),
+              const FormPlaceHolder(payload: [
+                {
+                  "hintText":"Owners National ID/Passport",
+                  "attribute":"idPass"
+                },
+                {
+                  "hintText":"Owner email",
+                  "attribute":"ownerEmail"
+                },
+              ],),
               Align(
                 alignment: Alignment.centerLeft,
                 child: text_widget(
@@ -389,51 +162,12 @@ class VendorAdding extends GetView<VendorCollection>{
                   text: "Business location details",
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store physical shop latitude",
-                        attribute: "ownerLat",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard position first",
-                        font: "Poppins",
-                        keybordType: TextInputType.text,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: formbuildtextfield(
-                        height: 50,
-                        color: 0xff1F1C34,
-                        hintText: "Store physical shop longitude",
-                        attribute: "ownerLong",
-                        dividerColor: 0xff1F1C34,
-                        errorText: "Enter dashboard title first",
-                        font: "Poppins",
-                        keybordType: TextInputType.number,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                        formType: "text",
-                        dropDownList: [],
-                        submitAction: () {}),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const FormPlaceHolder(payload: [
+                {
+                  "hintText":"Store rating",
+                  "attribute":"rating"
+                }
+              ],),
             ],
           ),
         ),
@@ -441,4 +175,46 @@ class VendorAdding extends GetView<VendorCollection>{
     );
   }
 
+}
+
+class FormPlaceHolder extends StatelessWidget {
+  final List payload;
+  const FormPlaceHolder({
+    super.key, required this.payload,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          children:payload.map((e) => Expanded(
+            child: Padding(
+              padding: payload.length.isGreaterThan(1)?const EdgeInsets.only(right:20.0):const EdgeInsets.only(left:0.0),
+              child: formbuildtextfield(
+                  height: 50,
+                  color: 0xff1F1C34,
+                  hintText: e['hintText'],
+                  attribute: e['attribute'],
+                  dividerColor: 0xff1F1C34,
+                  errorText: "Enter dashboard position first",
+                  font: "Poppins",
+                  keybordType: TextInputType.text,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15.0,
+                  formType: "text",
+                  dropDownList: [],
+                  submitAction: () {}),
+            ),
+          ),).toList(),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
 }
