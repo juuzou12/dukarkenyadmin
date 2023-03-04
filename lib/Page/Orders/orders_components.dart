@@ -334,6 +334,13 @@ class OrdersComponents {
                                                     return;
                                                   }
                                       if (collection ==
+                                                      "productType") {
+                                                    fun(snapshot
+                                                            .data!.docs[index]
+                                                        ['typeID']);
+                                                    return;
+                                                  }
+                                      if (collection ==
                                                       "sizes") {
                                                     fun(snapshot
                                                             .data!.docs[index]
@@ -418,7 +425,7 @@ class OrdersComponents {
         snapshot.data!.docs[index]['primaryKey'],
         snapshot.data!.docs[index]['url'],
         "${snapshot.data!.docs[index]['id']}",
-        "View"
+        "Remove"
       ];
     }else if(collection=="sizes"){
       listOfData=[

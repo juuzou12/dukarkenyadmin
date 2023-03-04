@@ -1,3 +1,4 @@
+import 'package:admin_dukar/Page/Vendors/vendor_add.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,25 +32,30 @@ class VendorPage extends StatelessWidget{
           children: [
             Align(
               alignment: Alignment.centerRight,
-              child: button_widgets(
-                color: AppColors().lightColorNo,
-                height: 45,
-                width: 150,
-                radius: 5,
-                borderColor: 0xffFF9C27B0,
-                fun: (){
+              child: InkWell(
+                child: button_widgets(
+                  color: AppColors().lightColorNo,
+                  height: 45,
+                  width: 150,
+                  radius: 5,
+                  borderColor: 0xffFF9C27B0,
+                  fun: (){
 
-                },
-                widget: Center(
-                    child: text_widget(
-                      color: AppColors().whiteColorNo,
-                      fontWeight: FontWeight.w400,
-                      textAlign: TextAlign.center,
-                      font: "Lato",
-                      fontSize: 15,
-                      text: "New Vendor",
-                    )
+                  },
+                  widget: Center(
+                      child: text_widget(
+                        color: AppColors().whiteColorNo,
+                        fontWeight: FontWeight.w400,
+                        textAlign: TextAlign.center,
+                        font: "Lato",
+                        fontSize: 15,
+                        text: "New Vendor",
+                      )
+                  ),
                 ),
+                onTap: (){
+                  Get.to(VendorAdding());
+                },
               ),
             ),
             const SizedBox(width: 10,),
