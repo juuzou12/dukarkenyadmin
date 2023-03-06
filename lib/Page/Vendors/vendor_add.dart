@@ -3,14 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../Controller/vendor_controller.dart';
+import '../../Widgets/button_widgets.dart';
 import '../../Widgets/formbuildtextfield.dart';
 import '../../Widgets/text_widget.dart';
 
 class VendorAdding extends GetView<VendorController>{
+  final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    String activationCode=controller.getRandomString(6);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -33,8 +38,40 @@ class VendorAdding extends GetView<VendorController>{
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: FormBuilder(
+          key: _formKey,
           child: ListView(
             children: [
+              Obx(() => Visibility(
+                visible: controller.isGood.isFalse,
+                child: Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                      color: Colors.amber.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          QrImage(data: activationCode,size: 100,),
+                          Expanded(
+                            child: text_widget(
+                              color: AppColors().darkColorNo,
+                              fontWeight: FontWeight.w400,
+                              textAlign: TextAlign.center,
+                              font: "Lato",
+                              fontSize: 12,
+                              text: "Activation code :- $activationCode",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )),
               Align(
                 alignment: Alignment.centerLeft,
                 child: text_widget(
@@ -78,6 +115,26 @@ class VendorAdding extends GetView<VendorController>{
                 },
               ],),
               Row(
+                children: [
+                  Expanded(
+                    child: formBuilderDropDownUI('genderTarget', "Pick business gender",
+                        ['Women only', 'Male only', 'Kids only', 'All genders'],context),
+                  ),
+                  const SizedBox(width: 20,),
+                  Expanded(
+                    child: formBuilderDropDownUI('storeType', "Pick business type", [
+                      'Clothes & Shoes',
+                      'Beauty products',
+                      'Accessories',
+                      'Salon & Barber',
+                      'baby products',
+                      'others'
+                    ],context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20,),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Align(
@@ -100,11 +157,9 @@ class VendorAdding extends GetView<VendorController>{
                   )
                 ],
               ),
+              formBuilderDropDownUI('payMethod',
+                  "Pick payment method", ['MPESA PAYBILL', 'MPESA BUY GOOD'],context),
               const FormPlaceHolder(payload: [
-                {
-                  "hintText":"Business accepted payment method",
-                  "attribute":"payMethod"
-                },
                 {
                   "hintText":"Business till number",
                   "attribute":"tillNo"
@@ -134,7 +189,7 @@ class VendorAdding extends GetView<VendorController>{
               const FormPlaceHolder(payload: [
                 {
                   "hintText":"Owner name",
-                  "attribute":"wonerName"
+                  "attribute":"ownerName"
                 },
                 {
                   "hintText":"Owner phone number",
@@ -162,19 +217,144 @@ class VendorAdding extends GetView<VendorController>{
                   text: "Business location details",
                 ),
               ),
-              const FormPlaceHolder(payload: [
-                {
-                  "hintText":"Store rating",
-                  "attribute":"rating"
-                }
-              ],),
+              formBuilderDropDownUI(
+                  'businessRating',
+                  "Pick a business Rating",
+                  [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],context),
+              const SizedBox(height: 20,),
+              InkWell(
+                child: button_widgets(
+                  color: AppColors().lightColorNo,
+                  height: 60,
+                  width: 150,
+                  radius: 10,
+                  borderColor: 0xffFF9C27B0,
+                  fun: (){
+
+                  },
+                  widget: Center(
+                      child: text_widget(
+                        color: AppColors().whiteColorNo,
+                        fontWeight: FontWeight.w400,
+                        textAlign: TextAlign.center,
+                        font: "Lato",
+                        fontSize: 15,
+                        text: "Add Vendor",
+                      )
+                  ),
+                ),
+                onTap: (){
+                  if(_formKey.currentState!.saveAndValidate()){
+                    controller.determinePosition().then((value)async{
+                      Map <String,dynamic> payload=await controller.payload(
+                          activationCode,
+                          _formKey.currentState!.value['storeName'],
+                          _formKey.currentState!.value['storeNumber'],
+                          true,
+                          "0", _formKey.currentState!.value['businessRating'],
+                          _formKey.currentState!.value['payMethod'],
+                          _formKey.currentState!.value['tillNo'],
+                          _formKey.currentState!.value['storeType'],
+                          _formKey.currentState!.value['bio'],
+                          _formKey.currentState!.value['storeEmail'],
+                          _formKey.currentState!.value['genderTarget'], {
+                            "ownerEmail": _formKey.currentState!.value['ownerEmail'],
+                            "ownerName": _formKey.currentState!.value['ownerName'],
+                            "ownerPhoneNo": _formKey.currentState!.value['ownerNo'],
+                            "ownerID": _formKey.currentState!.value['idPass'],
+                          }, {}, value.latitude, value.longitude);
+                      controller.addVendor("shoppySellers", payload, (){
+                        //successful
+                        print("all good");
+                        controller.firebaseAuth.createUserWithEmailAndPassword(email: _formKey.currentState!.value['storeEmail'], password: activationCode).
+                        then((value) => _formKey.currentState!.reset());
+                      }, (){
+                        //failed
+                        print("======================");
+                      },_formKey.currentState!.value['storeEmail']);
+                    });
+                  }
+                },
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
+  /*formBuilder dropDown*/
+  Widget formBuilderDropDownUI(String name, String hintValue, List mapList,BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Color(AppColors().greyLightColorNo).withOpacity(0.4))),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: name != "color"
+              ? FormBuilderDropdown(
+            name: name,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+            ),
+            // initialValue: 'Male',
+            hint: text_widget(
+              color: AppColors().greyLightColorNo,
+              fontWeight: FontWeight.w400,
+              textAlign: TextAlign.center,
+              font: "Lato",
+              fontSize: 16,
+              text: hintValue,
+            ),
+            validator: FormBuilderValidators.compose(
+                [FormBuilderValidators.required(context)]),
+            items: mapList
+                .map((value) => DropdownMenuItem(
+              value: value,
+              child: text_widget(
+                color: AppColors().darkColorNo,
+                fontWeight: FontWeight.w400,
+                textAlign: TextAlign.center,
+                font: "Lato",
+                fontSize: 16,
+                text: "$value",
+              ),
+            ))
+                .toList(),
+          )
+              : FormBuilderDropdown(
+            name: name,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+            ),
+            // initialValue: 'Male',
+            hint: text_widget(
+              color: AppColors().fadedLightColorNo,
+              fontWeight: FontWeight.w400,
+              textAlign: TextAlign.center,
+              font: "Lato",
+              fontSize: 16,
+              text: hintValue,
+            ),
+            validator: FormBuilderValidators.compose(
+                [FormBuilderValidators.required(context)]),
+            items: mapList
+                .map((value) => DropdownMenuItem(
+              value: value,
+              child: Icon(
+                Icons.circle,
+                size: 30,
+                color: Color(int.parse(value)),
+              ),
+              onTap: () {},
+            ))
+                .toList(),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class FormPlaceHolder extends StatelessWidget {
