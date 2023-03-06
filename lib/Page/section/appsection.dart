@@ -13,6 +13,7 @@ import '../../../style/app_Colors.dart';
 import '../Dashboard/dashboard_controller.dart';
 import '../Orders/order_page.dart';
 import '../Orders/orders_components.dart';
+import '../Products/product_management_page.dart';
 import '../Vendors/vendor_page.dart';
 import 'app_management.dart';
 import 'location_management.dart';
@@ -153,6 +154,8 @@ class AppSection {
         return VendorPage();
       case "Mobile Applications":
         return AppManagement().body();
+      case "Product management":
+        return ProductManagementPage();
     }
     return Center(
       child: Align(
@@ -183,7 +186,7 @@ class AppSection {
             "Order No","Product name","Quantity","Req. Date","Total price","Action"
           ], () {
             Get.to(OrderPage());
-          },"userOrder","timeStamp"),
+          },"userOrder","timeStamp",50),
           const SizedBox(height: 30,),
           filterSection("Order in-progress"),
           const SizedBox(height: 30,),

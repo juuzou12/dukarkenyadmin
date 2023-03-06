@@ -63,7 +63,7 @@ class LocationManagement{
           "Action"
         ], (id) {
           removeLocation(id);
-        },"locations","locations")
+        },"locations","locations",50)
       ],
     );
   }

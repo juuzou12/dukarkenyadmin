@@ -119,7 +119,7 @@ class VendorPage extends StatelessWidget{
           "Action"
         ], () {
           Get.to(ViewPage());
-        },"shoppySellers","timeStamp"),
+        },"shoppySellers","timeStamp",50),
         const SizedBox(height: 30,),
         Align(
           alignment: Alignment.centerLeft,

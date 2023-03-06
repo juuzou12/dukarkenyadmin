@@ -123,7 +123,7 @@ class AppManagement{
         ], (id) {
           print(id);
           removeLocation(id,"categories");
-        },"categories","name");
+        },"categories","name",50);
       case "Dashboard category":
         return OrdersComponents().allDetails([
           "Title",
@@ -134,7 +134,7 @@ class AppManagement{
           "Action"
         ], (id) {
           removeLocation(id,"shoppyDashboard");
-        },"shoppyDashboard","position");
+        },"shoppyDashboard","position",50);
       case "Product type":
         return OrdersComponents().allDetails([
           "Name",
@@ -144,7 +144,7 @@ class AppManagement{
           "Action"
         ], (id) {
           removeLocation(id,"productType");
-        },"productType","name");
+        },"productType","name",50);
         case "Product sizes":
         return OrdersComponents().allDetails([
           "Name",
@@ -152,7 +152,7 @@ class AppManagement{
           "Action"
         ], (id) {
           removeLocation(id,"sizes");
-        },"sizes","name");
+        },"sizes","name",50);
         case "Product fabric":
         return OrdersComponents().allDetails([
           "Name",
@@ -160,7 +160,7 @@ class AppManagement{
           "Action"
         ], (id) {
           removeLocation(id,"productFabric");
-        },"productFabric","name");
+        },"productFabric","name",50);
         case "Our Brands":
         return OrdersComponents().allDetails([
           "Name",
@@ -168,7 +168,7 @@ class AppManagement{
           "Action"
         ], (id) {
           removeLocation(id,"brands");
-        },"brands","name");
+        },"brands","name",50);
     }
     return SizedBox();
   }

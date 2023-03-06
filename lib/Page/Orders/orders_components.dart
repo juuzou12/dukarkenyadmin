@@ -242,7 +242,7 @@ class OrdersComponents {
     );
   }
 
-  Widget allDetails(List titleList, fun,String collection,String orderBy) {
+  Widget allDetails(List titleList, fun,String collection,String orderBy,limit) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -278,7 +278,7 @@ class OrdersComponents {
             const Divider(),
             StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection(collection).orderBy(orderBy,descending: false)
+                    .collection(collection).orderBy(orderBy,descending: false).limit(limit)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -444,6 +444,15 @@ class OrdersComponents {
         snapshot.data!.docs[index]['name'],
         snapshot.data!.docs[index]['primaryKey'],
         "Remove"
+      ];
+    }else if(collection=="shoppyProducts"){
+      listOfData=[
+        snapshot.data!.docs[index]['productName'],
+        "KES: ${snapshot.data!.docs[index]['price']}",
+        snapshot.data!.docs[index]['category'],
+        snapshot.data!.docs[index]['otherProductImageUrl'][0],
+        snapshot.data!.docs[index]['onOffer'],
+        snapshot.data!.docs[index]['sellerUUID'],
       ];
     }
     return listOfData;

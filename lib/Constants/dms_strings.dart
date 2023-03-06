@@ -45,8 +45,8 @@ class DsmString{
       "icon":Icons.location_on_outlined,
 
     }, {
-      "name":"Performances & Statistics",
-      "icon":Icons.bar_chart,
+      "name":"Product management",
+      "icon":Icons.shelves,
 
     }, {
       "name":"Ads & Revenue",
