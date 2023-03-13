@@ -1,3 +1,4 @@
+import 'package:admin_dukar/Page/User/user_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -107,10 +108,7 @@ class AppSection {
           children: [
             filterSection("User summary"),
             const SizedBox(height: 30,),
-            // OrdersComponents().orderListing(["Username","Full name","Created On","Email","Action"],["Juuzou","George Mathu","12-12-22-11:24:33","mathu.ke@gmail.com","View"],
-            //     (){
-            //
-            //     }),
+            Userpage()
           ],
         );
       case "Location Management":

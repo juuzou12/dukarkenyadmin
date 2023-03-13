@@ -196,81 +196,13 @@ class ViewComponent {
           const SizedBox(
             height: 20,
           ),
-          // OrdersComponents().orderListing([
-          //   "Order No",
-          //   "Product name",
-          //   "Quantity",
-          //   "Req. Date",
-          //   "Total price",
-          //   "Action"
-          // ], [
-          //   "SHP-012#",
-          //   "Nike Air-force 1s",
-          //   "X3",
-          //   "4 days ago",
-          //   "KES: 12,300",
-          //   "View"
-          // ], () {}),
-          const SizedBox(
-            height: 30,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [0, 1, 2, 3]
-                .map((e) => OrdersComponents().cardPlaceHolder("shoppySellers","",e.toString(),"activationStatus"))
+            children: [0]
+                .map((e) => OrdersComponents().cardPlaceHolder("shoppySellers","Total Orders",e.toString(),"activationStatus"))
                 .toList(),
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: text_widget(
-              color: AppColors().darkColorNo,
-              fontWeight: FontWeight.w600,
-              textAlign: TextAlign.center,
-              font: "Laila",
-              fontSize: 16,
-              text: "Vendor's riders",
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          // OrdersComponents().orderListing([
-          //   "Username",
-          //   "Full name",
-          //   "Created On",
-          //   "Email",
-          //   "Action"
-          // ], [
-          //   "Rider One",
-          //   "John Doh",
-          //   "12-12-22-11:24:33",
-          //   "email@example.com",
-          //   "View"
-          // ], () {}),
-          const SizedBox(
-            height: 30,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: text_widget(
-              color: AppColors().darkColorNo,
-              fontWeight: FontWeight.w600,
-              textAlign: TextAlign.center,
-              font: "Laila",
-              fontSize: 16,
-              text: "Vendor's locations",
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          // OrdersComponents().orderListing(
-          //     ["Location", "Sub-location", "Country", "City", "Action"],
-          //     ["Woodley Kenyatta", "Woodley", "Kenya", "Nairobi", "View"],
-          //     () {}),
+
         ],
       ),
     );

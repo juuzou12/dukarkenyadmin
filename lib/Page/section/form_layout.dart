@@ -104,7 +104,7 @@ class FormLayout {
                             "packagePlan",
                             "collectionType",
                             "portrait",
-                            "landscape"
+                            "landscape","none"
                           ],
                           valueString.value)),
                     ),

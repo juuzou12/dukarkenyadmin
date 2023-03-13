@@ -9,13 +9,28 @@ import '../../style/app_Colors.dart';
 import '../View/view_page.dart';
 
 class OrdersComponents {
+  void editCategoryDashboard(String locationID,String? position,String? title,String? value,String? condition,bool? show,
+      String? positionOriginal,String? titleOriginal,String? valueOriginal,String? conditionOriginal,bool? showOriginal,)async{
+    Map <String,dynamic>data={
+      "position":position??positionOriginal,
+      "title":title??titleOriginal,
+      "value":value??valueOriginal,
+      "condition":condition??conditionOriginal,
+      "show":show??showOriginal,
+    };
+    FirebaseFirestore.instance.collection("shoppyDashboard")
+        .doc(locationID)
+        .update(data)
+        .then((value) => Get.back())
+        .onError((error, stackTrace) =>Get.snackbar("Add Location", "$error") );
+  }
   //order
-  Widget cardPlaceHolder(String collection,String c,String v,String field) {
+  Widget cardPlaceHolder(String collection, String c, String v, String field) {
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection(collection)
-              .where(field,isEqualTo: c)
+              .where(field, isEqualTo: c)
               .snapshots(),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -23,50 +38,50 @@ class OrdersComponents {
                 ConnectionState.waiting &&
                 snapshot.data!.docs.isNotEmpty
                 ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AnimatedContainer(
-                      duration: Duration(seconds: 1),
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color(AppColors().whiteColorNo),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: text_widget(
-                                color: AppColors().greyLightColorNo,
-                                fontWeight: FontWeight.w600,
-                                textAlign: TextAlign.center,
-                                font: "Laila",
-                                fontSize: 20,
-                                text: "${snapshot.data!.docs.length}",
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: text_widget(
-                                color: AppColors().darkColorNo,
-                                fontWeight: FontWeight.w400,
-                                textAlign: TextAlign.start,
-                                font: "Laila",
-                                fontSize: 14,
-                                text: "$c",
-                              ),
-                            ),
-                          ],
+              padding: const EdgeInsets.all(8.0),
+              child: AnimatedContainer(
+                duration: Duration(seconds: 1),
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color(AppColors().whiteColorNo),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: text_widget(
+                          color: AppColors().greyLightColorNo,
+                          fontWeight: FontWeight.w600,
+                          textAlign: TextAlign.center,
+                          font: "Laila",
+                          fontSize: 20,
+                          text: "${snapshot.data!.docs.length}",
                         ),
                       ),
-                    ),
-                  )
-                :Padding(
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: text_widget(
+                          color: AppColors().darkColorNo,
+                          fontWeight: FontWeight.w400,
+                          textAlign: TextAlign.start,
+                          font: "Laila",
+                          fontSize: 14,
+                          text: "$c",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+                : Padding(
               padding: const EdgeInsets.all(8.0),
               child: AnimatedContainer(
                 duration: Duration(seconds: 1),
@@ -115,7 +130,8 @@ class OrdersComponents {
   }
 
   //listing
-  Widget orderListing(List titleList, fun,String collection,String field,String value) {
+  Widget orderListing(List titleList, fun, String collection, String field,
+      String value) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -130,19 +146,20 @@ class OrdersComponents {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: titleList
-                  .map((e) => Expanded(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: text_widget(
-                            color: 0xff0EA390,
-                            fontWeight: FontWeight.w600,
-                            textAlign: TextAlign.center,
-                            font: "Laila",
-                            fontSize: 14,
-                            text: e,
-                          ),
-                        ),
-                      ))
+                  .map((e) =>
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: text_widget(
+                        color: 0xff0EA390,
+                        fontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                        font: "Laila",
+                        fontSize: 14,
+                        text: e,
+                      ),
+                    ),
+                  ))
                   .toList(),
             ),
             const SizedBox(
@@ -151,11 +168,11 @@ class OrdersComponents {
             const Divider(),
             StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection(collection).where(field,isEqualTo: value)
+                    .collection(collection).where(field, isEqualTo: value)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  return  snapshot.connectionState !=
+                  return snapshot.connectionState !=
                       ConnectionState.waiting &&
                       snapshot.data!.docs.isNotEmpty
                       ? ListView.builder(
@@ -163,19 +180,26 @@ class OrdersComponents {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
-                        List listOfData=[];
-                        if(collection=="shoppySellers"){
-                          listOfData=[
-                            snapshot.data!.docs[index]['ownerInfo']['ownerName'],snapshot.data!.docs[index]['storeName'],snapshot.data!.docs[index]['timeStamp'],
-                            snapshot.data!.docs[index]['storeEmail'],"View"
-                          ];
-                        }else if(collection=="userOrder"){
-                          listOfData=[
-                            "SHP-0$index#",
-                            snapshot.data!.docs[index]['productInfo']['productName'],
-                            snapshot.data!.docs[index]['productInfo']['quantity'],
+                        List listOfData = [];
+                        if (collection == "shoppySellers") {
+                          listOfData = [
+                            snapshot.data!
+                                .docs[index]['ownerInfo']['ownerName'],
+                            snapshot.data!.docs[index]['storeName'],
                             snapshot.data!.docs[index]['timeStamp'],
-                            "KES: ${snapshot.data!.docs[index]['orderInfo']['subtotal']}",
+                            snapshot.data!.docs[index]['storeEmail'],
+                            "View"
+                          ];
+                        } else if (collection == "userOrder") {
+                          listOfData = [
+                            "SHP-0$index#",
+                            snapshot.data!
+                                .docs[index]['productInfo']['productName'],
+                            snapshot.data!
+                                .docs[index]['productInfo']['quantity'],
+                            snapshot.data!.docs[index]['timeStamp'],
+                            "KES: ${snapshot.data!
+                                .docs[index]['orderInfo']['subtotal']}",
                             "View"
                           ];
                         }
@@ -185,26 +209,34 @@ class OrdersComponents {
                               height: 20,
                             ),
                             Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: listOfData.map((e) => Expanded(
-                                  child: InkWell(
-                                    hoverColor: Colors.transparent,
-                                    onTap: () {
-                                      fun();
-                                    },
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: text_widget(
-                                        color:e=="View"?AppColors().darkColorNo:e=="Remove"?AppColors().darkColorNo:AppColors().greyLightColorNo,
-                                        fontWeight:  e=="View"?FontWeight.w600: e=="Remove"?FontWeight.w600:FontWeight.w400,
-                                        textAlign: TextAlign.start,
-                                        font: "Laila",
-                                        fontSize: 14,
-                                        text: "$e",
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: listOfData.map((e) =>
+                                    Expanded(
+                                      child: InkWell(
+                                        hoverColor: Colors.transparent,
+                                        onTap: () {
+                                          fun();
+                                        },
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: text_widget(
+                                            color: e == "View" ? AppColors()
+                                                .darkColorNo : e == "Remove"
+                                                ? AppColors().darkColorNo
+                                                : AppColors().greyLightColorNo,
+                                            fontWeight: e == "View" ? FontWeight
+                                                .w600 : e == "Remove"
+                                                ? FontWeight.w600
+                                                : FontWeight.w400,
+                                            textAlign: TextAlign.start,
+                                            font: "Laila",
+                                            fontSize: 14,
+                                            text: "$e",
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                )).toList()
+                                    )).toList()
                             ),
                             const SizedBox(
                               height: 20,
@@ -212,7 +244,7 @@ class OrdersComponents {
                           ],
                         );
                       })
-                      :SizedBox();
+                      : SizedBox();
                 }),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -242,7 +274,8 @@ class OrdersComponents {
     );
   }
 
-  Widget allDetails(List titleList, fun,String collection,String orderBy,limit) {
+  Widget allDetails(List titleList, fun, String collection, String orderBy,
+      limit) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -257,19 +290,20 @@ class OrdersComponents {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: titleList
-                  .map((e) => Expanded(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: text_widget(
-                            color: 0xff0EA390,
-                            fontWeight: FontWeight.w600,
-                            textAlign: TextAlign.center,
-                            font: "Laila",
-                            fontSize: 14,
-                            text: e,
-                          ),
-                        ),
-                      ))
+                  .map((e) =>
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: text_widget(
+                        color: 0xff0EA390,
+                        fontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                        font: "Laila",
+                        fontSize: 14,
+                        text: e,
+                      ),
+                    ),
+                  ))
                   .toList(),
             ),
             const SizedBox(
@@ -278,11 +312,12 @@ class OrdersComponents {
             const Divider(),
             StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection(collection).orderBy(orderBy,descending: false).limit(limit)
+                    .collection(collection).orderBy(orderBy, descending: false)
+                    .limit(limit)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  return  snapshot.connectionState !=
+                  return snapshot.connectionState !=
                       ConnectionState.waiting &&
                       snapshot.data!.docs.isNotEmpty
                       ? ListView.builder(
@@ -296,72 +331,111 @@ class OrdersComponents {
                               height: 20,
                             ),
                             Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: dataList(collection,snapshot,index).map((e) => Expanded(
-                                  child: InkWell(
-                                    hoverColor: Colors.transparent,
-                                    onTap: () {
-                                      if (collection ==
-                                                      "locations") {
-                                                    fun(snapshot
-                                                            .data!.docs[index]
-                                                        ['locationID']);
-                                                    return;
-                                                  }
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: dataList(collection, snapshot, index)
+                                    .map((e) =>
+                                    Expanded(
+                                      child: InkWell(
+                                        hoverColor: Colors.transparent,
+                                        onTap: () {
+                                          if (e.toString()=="Remove") {
+                                            if (collection ==
+                                                "locations") {
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['locationID']);
+                                              return;
+                                            }
 
-                                      if (collection ==
-                                                      "shoppyDashboard") {
-                                        print("shoppyDashboard${snapshot
-                                            .data!.docs[index]
-                                        ['uid']}");
-                                                    fun(snapshot
-                                                            .data!.docs[index]
-                                                        ['uid']);
-                                                    return;
-                                                  }
-                                      if (collection ==
-                                                      "categories") {
-                                                    fun(snapshot
-                                                            .data!.docs[index]
-                                                        ['categoryID']);
-                                                    return;
-                                                  }
-                                      if (collection ==
-                                                      "productFabric") {
-                                                    fun(snapshot
-                                                            .data!.docs[index]
-                                                        ['fabricID']);
-                                                    return;
-                                                  }
-                                      if (collection ==
-                                                      "productType") {
-                                                    fun(snapshot
-                                                            .data!.docs[index]
-                                                        ['typeID']);
-                                                    return;
-                                                  }
-                                      if (collection ==
-                                                      "sizes") {
-                                                    fun(snapshot
-                                                            .data!.docs[index]
-                                                        ['sizeID']);
-                                                    return;
-                                                  }
+                                            if (collection ==
+                                                "shoppyDashboard") {
+                                              print("shoppyDashboard${snapshot
+                                                  .data!.docs[index]
+                                              ['uid']}");
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['uid']);
+                                              return;
+                                            }
+                                            if (collection ==
+                                                "categories") {
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['categoryID']);
+                                              return;
+                                            }
+                                            if (collection ==
+                                                "productFabric") {
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['fabricID']);
+                                              return;
+                                            }
+                                            if (collection ==
+                                                "productType") {
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['typeID']);
+                                              return;
+                                            }
+                                            if (collection ==
+                                                "sizes") {
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['sizeID']);
+                                              return;
+                                            }if (collection ==
+                                                "brands") {
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['brandsID']);
+                                              return;
+                                            }
+                                          }
+                                        },
+                                        child: e
+                                            .toString()
+                                            .isURL
+                                            ? Align(alignment: Alignment.centerLeft,child: Image.network(
+                                          e, width: 50, height: 50,),)
+                                            : e.toString().isBool&&collection ==
+                                            "shoppyDashboard"?CupertinoSwitch(value: snapshot.data!.docs[index]['show'], onChanged: (v)async{
+                                              print(v);
+                                              editCategoryDashboard(
+                                                  snapshot.data!.docs[index]['uid'],
+                                                  null,
+                                                  null,
+                                                  null,
+                                                  null,
+                                                  null,
+                                                  snapshot.data!.docs[index]['position'],
+                                                  snapshot.data!.docs[index]['title'],
+                                                  snapshot.data!.docs[index]['value'],
+                                                  snapshot.data!.docs[index]['condition'],
+                                                  v
+                                                  );
 
-                                                },
-                                    child: e.toString().isURL?Align(child: Image.network(e,width: 50,height: 50,),alignment: Alignment.centerLeft,):Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: text_widget(
-                                        color:e=="View"?AppColors().darkColorNo:e=="Remove"?AppColors().darkColorNo:AppColors().greyLightColorNo,
-                                        fontWeight:  e=="View"?FontWeight.w600: e=="Remove"?FontWeight.w600:FontWeight.w400,
-                                        textAlign: TextAlign.start,
-                                        font: "Laila",
-                                        fontSize: 14,
-                                        text: e==""?"---":"$e",
+                                        })
+                                            :Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: text_widget(
+                                            color: e == "View" ? AppColors()
+                                                .darkColorNo : e == "Remove"
+                                                ? AppColors().darkColorNo
+                                                : AppColors().greyLightColorNo,
+                                            fontWeight: e == "View" ? FontWeight
+                                                .w600 : e == "Remove"
+                                                ? FontWeight.w600
+                                                : FontWeight.w400,
+                                            textAlign: TextAlign.start,
+                                            font: "Laila",
+                                            fontSize: 14,
+                                            text: e == "" ? "---" : "$e",
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                )).toList()
+                                    )).toList()
                             ),
                             const SizedBox(
                               height: 20,
@@ -370,7 +444,7 @@ class OrdersComponents {
                           ],
                         );
                       })
-                      :SizedBox();
+                      : SizedBox();
                 }),
           ],
         ),
@@ -378,15 +452,19 @@ class OrdersComponents {
     );
   }
 
-  List dataList(String collection,AsyncSnapshot<QuerySnapshot> snapshot,int index){
-    List listOfData=[];
-    if(collection=="shoppySellers"){
-      listOfData=[
-        snapshot.data!.docs[index]['ownerInfo']['ownerName'],snapshot.data!.docs[index]['storeName'],snapshot.data!.docs[index]['timeStamp'],
-        snapshot.data!.docs[index]['storeEmail'],"View"
+  List dataList(String collection, AsyncSnapshot<QuerySnapshot> snapshot,
+      int index) {
+    List listOfData = [];
+    if (collection == "shoppySellers") {
+      listOfData = [
+        snapshot.data!.docs[index]['ownerInfo']['ownerName'],
+        snapshot.data!.docs[index]['storeName'],
+        snapshot.data!.docs[index]['timeStamp'],
+        snapshot.data!.docs[index]['storeEmail'],
+        "View"
       ];
-    }else if(collection=="userOrder"){
-      listOfData=[
+    } else if (collection == "userOrder") {
+      listOfData = [
         "SHP-0$index#",
         snapshot.data!.docs[index]['productInfo']['productName'],
         snapshot.data!.docs[index]['productInfo']['quantity'],
@@ -394,16 +472,16 @@ class OrdersComponents {
         "KES: ${snapshot.data!.docs[index]['orderInfo']['subtotal']}",
         "View"
       ];
-    }else if(collection=="locations"){
-      listOfData=[
+    } else if (collection == "locations") {
+      listOfData = [
         snapshot.data!.docs[index]['country'],
         snapshot.data!.docs[index]['county'],
         snapshot.data!.docs[index]['subCountyName'],
         "${snapshot.data!.docs[index]['locations']}",
         "Remove"
       ];
-    }else if(collection=="shoppyDashboard"){
-      listOfData=[
+    } else if (collection == "shoppyDashboard") {
+      listOfData = [
         snapshot.data!.docs[index]['title'],
         snapshot.data!.docs[index]['position'],
         snapshot.data!.docs[index]['value'],
@@ -411,48 +489,56 @@ class OrdersComponents {
         "${snapshot.data!.docs[index]['show']}",
         "Remove",
       ];
-    }else if(collection=="categories"){
-      listOfData=[
+    } else if (collection == "categories") {
+      listOfData = [
         snapshot.data!.docs[index]['name'],
         snapshot.data!.docs[index]['no'],
         snapshot.data!.docs[index]['url'],
         "${snapshot.data!.docs[index]['categoryID']}",
         "View"
       ];
-    }else if(collection=="productType"){
-      listOfData=[
+    } else if (collection == "productType") {
+      listOfData = [
         snapshot.data!.docs[index]['name'],
         snapshot.data!.docs[index]['primaryKey'],
         snapshot.data!.docs[index]['url'],
         "${snapshot.data!.docs[index]['id']}",
         "Remove"
       ];
-    }else if(collection=="sizes"){
-      listOfData=[
+    } else if (collection == "sizes") {
+      listOfData = [
         snapshot.data!.docs[index]['name'],
         snapshot.data!.docs[index]['primaryKey'],
         "Remove"
       ];
-    }else if(collection=="productFabric"){
-      listOfData=[
+    } else if (collection == "productFabric") {
+      listOfData = [
         snapshot.data!.docs[index]['name'],
         snapshot.data!.docs[index]['primaryKey'],
         "Remove"
       ];
-    }else if(collection=="brands"){
-      listOfData=[
+    } else if (collection == "brands") {
+      listOfData = [
         snapshot.data!.docs[index]['name'],
         snapshot.data!.docs[index]['primaryKey'],
         "Remove"
       ];
-    }else if(collection=="shoppyProducts"){
-      listOfData=[
+    } else if (collection == "shoppyProducts") {
+      listOfData = [
         snapshot.data!.docs[index]['productName'],
         "KES: ${snapshot.data!.docs[index]['price']}",
         snapshot.data!.docs[index]['category'],
         snapshot.data!.docs[index]['otherProductImageUrl'][0],
         snapshot.data!.docs[index]['onOffer'],
         snapshot.data!.docs[index]['sellerUUID'],
+      ];
+    } else if (collection == "shoppyUsers") {
+      listOfData = [
+        snapshot.data!.docs[index]['fullName'],
+        "${snapshot.data!.docs[index]['email']}",
+        snapshot.data!.docs[index]['timeStamp'],
+        snapshot.data!.docs[index]['phoneNumber'],
+        "View"
       ];
     }
     return listOfData;
@@ -463,7 +549,7 @@ class OrdersComponents {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: SizedBox(
-        width: Get.width/2,
+        width: Get.width / 2,
         height: Get.height,
         child: ListView(
           children: [
@@ -561,7 +647,7 @@ class OrdersComponents {
     );
   }
 
-  Widget specifications(){
+  Widget specifications() {
     return AnimatedContainer(
       duration: const Duration(seconds: 1),
       decoration: BoxDecoration(
@@ -663,7 +749,7 @@ class OrdersComponents {
     );
   }
 
-  Widget deliveryDetails(){
+  Widget deliveryDetails() {
     return AnimatedContainer(
       duration: const Duration(seconds: 1),
       decoration: BoxDecoration(
@@ -737,7 +823,7 @@ class OrdersComponents {
     );
   }
 
-  Widget buyerDetails(){
+  Widget buyerDetails() {
     return AnimatedContainer(
       duration: const Duration(seconds: 1),
       decoration: BoxDecoration(
@@ -811,7 +897,7 @@ class OrdersComponents {
     );
   }
 
-  Widget pricing(){
+  Widget pricing() {
     return AnimatedContainer(
       duration: const Duration(seconds: 1),
       decoration: BoxDecoration(
@@ -941,7 +1027,7 @@ class OrdersComponents {
     );
   }
 
-  Widget progress(){
+  Widget progress() {
     return AnimatedContainer(
       duration: const Duration(seconds: 1),
       decoration: BoxDecoration(
@@ -952,38 +1038,40 @@ class OrdersComponents {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            0,1,2,3
-          ].map((e) => Row(
-            children: [
-              CircleAvatar(
-                radius: 5,
-                backgroundColor: Color(AppColors().lightColorNo),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: text_widget(
-                    color: AppColors().darkColorNo,
-                    fontWeight: FontWeight.w400,
-                    textAlign: TextAlign.start,
-                    font: "Laila",
-                    fontSize: 14,
-                    text: "Awaiting vendor acceptance",
+            0, 1, 2, 3
+          ].map((e) =>
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 5,
+                    backgroundColor: Color(AppColors().lightColorNo),
                   ),
-                ),
-              ),
-              Icon(Icons.check_circle_outline,size: 15,color: Color(AppColors().lightColorNo),)
-            ],
-          )).toList(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: text_widget(
+                        color: AppColors().darkColorNo,
+                        fontWeight: FontWeight.w400,
+                        textAlign: TextAlign.start,
+                        font: "Laila",
+                        fontSize: 14,
+                        text: "Awaiting vendor acceptance",
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.check_circle_outline, size: 15,
+                    color: Color(AppColors().lightColorNo),)
+                ],
+              )).toList(),
         ),
       ),
     );
   }
 
-  Widget communication(){
+  Widget communication() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 50.0,left: 15.0),
+      padding: const EdgeInsets.only(bottom: 50.0, left: 15.0),
       child: Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -992,8 +1080,8 @@ class OrdersComponents {
               alignment: Alignment.centerLeft,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: AppColors().fadedLightColor
+                    borderRadius: BorderRadius.circular(100),
+                    color: AppColors().fadedLightColor
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -1016,8 +1104,8 @@ class OrdersComponents {
                   alignment: Alignment.centerRight,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: AppColors().darkColor
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColors().darkColor
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

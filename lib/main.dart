@@ -10,6 +10,7 @@ import 'Controller/vendor_controller.dart';
 import 'Page/Dashboard/dashboard_controller.dart';
 import 'Page/LoginPage/login_controller.dart';
 import 'Page/LoginPage/login_page.dart';
+import 'Page/User/user_controller.dart';
 import 'Page/section/form_layout.dart';
 import 'firebase_options.dart';
 
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
     Get.put(DashboardController());
     Get.put(VendorController());
     Get.put(AuthController());
+    Get.put(UserController());
     return GetMaterialApp(
       title: 'Dukar Admin',
       debugShowCheckedModeBanner: false,

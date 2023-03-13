@@ -22,9 +22,7 @@ class ViewPage extends GetView<ViewPageController>{
           color: Color(AppColors().darkColorNo)
         ),
       ),
-      // bottomNavigationBar: SizedBox(
-      //     height: 70,
-      //     child: comp.placeHolderD("left",comp.navigator())),
+
       body: Row(
         children: [
           viewComp.vendorDetails(),
