@@ -391,6 +391,12 @@ class OrdersComponents {
                                                   .data!.docs[index]
                                               ['brandsID']);
                                               return;
+                                            }if (collection ==
+                                                "riders") {
+                                              fun(snapshot
+                                                  .data!.docs[index]
+                                              ['documentID']);
+                                              return;
                                             }
                                           }
                                         },
@@ -538,6 +544,15 @@ class OrdersComponents {
         "${snapshot.data!.docs[index]['email']}",
         snapshot.data!.docs[index]['timeStamp'],
         snapshot.data!.docs[index]['phoneNumber'],
+        "View"
+      ];
+    }else if (collection == "riders") {
+      listOfData = [
+        snapshot.data!.docs[index]['riderName'],
+        "${snapshot.data!.docs[index]['riderNumber']}",
+        snapshot.data!.docs[index]['riderIDNumber'],
+        snapshot.data!.docs[index]['imageUrl'],
+        snapshot.data!.docs[index]['numberPlate'],
         "View"
       ];
     }

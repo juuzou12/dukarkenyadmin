@@ -15,6 +15,7 @@ import '../Dashboard/dashboard_controller.dart';
 import '../Orders/order_page.dart';
 import '../Orders/orders_components.dart';
 import '../Products/product_management_page.dart';
+import '../Riders/rider_page.dart';
 import '../Vendors/vendor_page.dart';
 import 'app_management.dart';
 import 'location_management.dart';
@@ -114,40 +115,7 @@ class AppSection {
       case "Location Management":
         return LocationManagement().body();
       case "Riders":
-        return Column(
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: button_widgets(
-                color: AppColors().lightColorNo,
-                height: 60,
-                width: 150,
-                radius: 10,
-                borderColor: 0xffFF9C27B0,
-                fun: (){
-
-                },
-                widget: Center(
-                    child: text_widget(
-                      color: AppColors().whiteColorNo,
-                      fontWeight: FontWeight.w400,
-                      textAlign: TextAlign.center,
-                      font: "Lato",
-                      fontSize: 15,
-                      text: "Register Rider",
-                    )
-                ),
-              ),
-            ),
-            const SizedBox(height: 30,),
-            filterSection("Rider summary"),
-            const SizedBox(height: 30,),
-            // OrdersComponents().orderListing(["Username","Full name","Created On","Email","Action"],["Rider One","John Doh","12-12-22-11:24:33","email@example.com","View"],
-            //     (){
-            //
-            //     }),
-          ],
-        );
+        return RiderPage().body();
       case "Vendors":
         return VendorPage();
       case "Mobile Applications":
