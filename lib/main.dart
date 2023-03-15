@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Dukar Admin',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: DashboardPage(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

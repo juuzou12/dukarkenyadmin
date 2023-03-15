@@ -605,6 +605,107 @@ class FormLayout {
             ),
           ]),
         );
+
+      case "New Rider":
+        return FormBuilder(
+          key: _formKey,
+            child: Column(
+              children: [
+                formbuildtextfield(
+                    height: 50,
+                    color: 0xff1F1C34,
+                    hintText: "Enter rider email",
+                    attribute: "riderEmail",
+                    dividerColor: 0xff1F1C34,
+                    errorText: "Enter rider email first",
+                    font: "Poppins",
+                    keybordType: TextInputType.emailAddress,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15.0,
+                    formType: "text",
+                    dropDownList: [],
+                    submitAction: () {}),
+
+                const SizedBox(
+                  height: 16,
+                ),
+                formbuildtextfield(
+                    height: 50,
+                    color: 0xff1F1C34,
+                    hintText: "Enter rider phone number",
+                    attribute: "riderPhoneNo",
+                    dividerColor: 0xff1F1C34,
+                    errorText: "Enter rider phone number first",
+                    font: "Poppins",
+                    keybordType: TextInputType.number,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15.0,
+                    formType: "text",
+                    dropDownList: [],
+                    submitAction: () {}),
+
+                const SizedBox(
+                  height: 16,
+                ),
+                formbuildtextfield(
+                    height: 50,
+                    color: 0xff1F1C34,
+                    hintText: "Enter rider full name",
+                    attribute: "riderFullname",
+                    dividerColor: 0xff1F1C34,
+                    errorText: "Enter rider full name first",
+                    font: "Poppins",
+                    keybordType: TextInputType.text,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15.0,
+                    formType: "text",
+                    dropDownList: [],
+                    submitAction: () {}),
+
+                const SizedBox(
+                  height: 16,
+                ),
+                formbuildtextfield(
+                    height: 50,
+                    color: 0xff1F1C34,
+                    hintText: "Enter rider number plate",
+                    attribute: "riderPlateNo",
+                    dividerColor: 0xff1F1C34,
+                    errorText: "Enter rider number plate first",
+                    font: "Poppins",
+                    keybordType: TextInputType.text,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15.0,
+                    formType: "text",
+                    dropDownList: [],
+                    submitAction: () {}),
+
+                const SizedBox(
+                  height: 16,
+                ),
+
+                formbuildtextfield(
+                    height: 50,
+                    color: 0xff1F1C34,
+                    hintText: "Enter rider Id number",
+                    attribute: "riderPlateNo",
+                    dividerColor: 0xff1F1C34,
+                    errorText: "Enter rider id number first",
+                    font: "Poppins",
+                    keybordType: TextInputType.number,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15.0,
+                    formType: "text",
+                    dropDownList: [],
+                    submitAction: () {}),
+
+                const SizedBox(
+                  height: 16,
+                ),
+
+              ],
+            )
+        );
     }
     return SizedBox();
   }
